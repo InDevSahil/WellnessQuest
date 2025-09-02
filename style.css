@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+body {
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s ease-in-out;
+}
+.glow-shadow {
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+}
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+.animate-pulse-slow {
+    animation: pulse 4s infinite ease-in-out;
+}
+
+/* Chat message styles */
+#chatMessages .bg-blue-500 {
+    background-color: #3b82f6;
+    color: white;
+    margin-left: auto;
+    margin-bottom: 0.5rem;
+}
+
+#chatMessages .bg-white {
+    background-color: white;
+    color: #1e293b;
+    margin-right: auto;
+    margin-bottom: 0.5rem;
+    border: 1px solid #e2e8f0;
+}
+
+/* Resource details styles */
+details summary {
+    cursor: pointer;
+    user-select: none;
+}
+
+details summary:hover {
+    color: #3b82f6;
+}
+
+details p {
+    margin-top: 0.5rem;
+    color: #64748b;
+}

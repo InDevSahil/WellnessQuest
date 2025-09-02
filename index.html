@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wellness Quest</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-b from-indigo-100 via-sky-100 to-white text-slate-800">
+
+    <!-- Header Navigation -->
+    <header class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center gap-2">
+                    <span class="text-2xl">🧭</span>
+                    <h1 class="text-xl md:text-2xl font-bold text-slate-900">Wellness Quest</h1>
+                </div>
+                <nav class="flex space-x-4 items-center">
+                    <a href="#" id="homeLink" class="text-slate-700 hover:text-blue-600 font-medium">Home</a>
+                    <a href="#" id="calendarLink" class="text-slate-700 hover:text-blue-600 font-medium">Calendar</a>
+                    <div id="workoutStreak" class="ml-4 flex items-center gap-2 text-green-700 font-semibold text-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 animate-pulse text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 2C10 6 6 8 6 12c0 3 3 5 6 5s6-2 6-5c0-4-4-6-6-10z"/>
+                        </svg>
+                        <span id="workoutStreakText">0</span> day streak
+                    </div>
+                    <div class="g-signin2" data-onsuccess="onGoogleSignIn" data-theme="dark"></div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div id="app" class="min-h-screen p-4 md:p-8">
+
+        <div class="flex items-center gap-3 mb-6">
+            <span class="text-3xl">🧭</span>
+            <h1 class="text-2xl md:text-4xl font-extrabold tracking-tight text-slate-900">Wellness Quest</h1>
+            <div class="ml-auto inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors bg-blue-500 text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 mr-1">
+                    <path d="M2.18 20.82c-1.3-1.3-.82-4.18.23-5.23L16.64 2.37c1.05-1.05 2.93-1.53 4.23-.23.95.95.82 2.76-.23 3.81L7.82 20.59c-1.05 1.05-2.86 1.18-3.81.23-.95-.95-.82-2.76.23-3.81z"/>
+                    <path d="M12.9 6.1c1.05-1.05 2.93-1.53 4.23-.23.95.95.82 2.76-.23 3.81"/>
+                </svg>
+                Prototype
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+            <div class="bg-white border rounded-2xl shadow-sm p-6 transform transition-all hover:scale-[1.02] hover:shadow-lg">
+                <h3 class="text-base font-semibold leading-none tracking-tight pb-2">Level</h3>
+                <div class="flex items-center gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 text-blue-500">
+                        <path d="m15.477 12.896-3.898 3.898a.92.92 0 0 1-1.302 0L2.1 10.74c-.465-.465-.465-1.22 0-1.685l4.61-4.61c.465-.465 1.22-.465 1.685 0l3.898 3.898a.92.92 0 0 1 0 1.302Z"/>
+                        <path d="M18.896 15.477-12.896 15.477-8.823 19.55-.92-1.302Z"/>
+                        <path d="m15.477 12.896-12.896-12.896L-8.823 19.55-.92-1.302Z"/>
+                    </svg>
+                    <div>
+                        <div id="level" class="text-2xl font-bold">1</div>
+                        <div id="xpToNext" class="text-xs text-muted-foreground text-slate-500">0 XP to next</div>
+                    </div>
+                </div>
+                <div class="relative h-2 w-full overflow-hidden rounded-full bg-blue-500/20 mt-3">
+                    <div id="levelProgress" class="h-full bg-blue-500 transition-all duration-500 ease-in-out"></div>
+                </div>
+            </div>
+
+            <div class="bg-white border rounded-2xl shadow-sm p-6 transform transition-all hover:scale-[1.02] hover:shadow-lg glow-shadow">
+                <h3 class="text-base font-semibold leading-none tracking-tight pb-2">XP</h3>
+                <div class="flex items-center gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 text-yellow-500">
+                        <path d="M12.5 12.5h-1v-2h1v2zM12 21.5V23h-1v-1.5H8.5V23h-1v-1.5z"/>
+                        <path d="M12 21.5V23h-1v-1.5H8.5V23h-1v-1.5z"/>
+                        <path d="M12 21.5V23h-1v-1.5H8.5V23h-1v-1.5z"/>
+                        <path d="M12.5 12.5h-1v-2h1v2z"/>
+                    </svg>
+                    <div id="totalXp" class="text-2xl font-bold">0</div>
+                </div>
+                <div class="text-xs text-muted-foreground mt-2 flex items-center gap-1 text-slate-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3 h-3 text-emerald-500">
+                        <path d="m17 14 5 5-5 5"/>
+                        <path d="M22 21H1"/>
+                    </svg>
+                    Keep the streak going!
+                </div>
+            </div>
+
+            <div class="bg-white border rounded-2xl shadow-sm p-6 transform transition-all hover:scale-[1.02] hover:shadow-lg">
+                <h3 class="text-base font-semibold leading-none tracking-tight pb-2">Weekly Challenge</h3>
+                <div class="flex items-center gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 text-green-500">
+                        <path d="M2.18 20.82c-1.3-1.3-.82-4.18.23-5.23L16.64 2.37c1.05-1.05 2.93-1.53 4.23-.23.95.95.82 2.76-.23 3.81L7.82 20.59c-1.05 1.05-2.86 1.18-3.81.23-.95-.95-.82-2.76.23-3.81z"/>
+                    </svg>
+                    <div class="w-full">
+                        <div class="relative h-2 w-full overflow-hidden rounded-full bg-green-500/20">
+                            <div id="weeklyProgress" class="h-full bg-green-500 transition-all duration-500 ease-in-out"></div>
+                        </div>
+                        <div id="weeklyProgressText" class="text-xs text-muted-foreground mt-2 text-slate-500">0% of 100</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white border rounded-2xl shadow-sm p-6 transform transition-all hover:scale-[1.02] hover:shadow-lg">
+                <h3 class="text-base font-semibold leading-none tracking-tight pb-2">Avatar</h3>
+                <div class="flex items-center gap-3">
+                    <div id="avatarEmoji" class="text-3xl">🌱</div>
+                    <div>
+                        <div class="text-sm text-slate-500">Choose your vibe</div>
+                        <div id="avatarButtons" class="flex gap-2 mt-1"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+<div class="bg-white border rounded-2xl shadow-sm lg:col-span-2 p-6 relative">
+    <h3 class="text-lg font-semibold leading-none tracking-tight pb-2 flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-purple-500">
+            <path d="M12 12V21M18 10h-6V4H6V10H0M24 10h-6V4H0V10H24Z"/>
+            <path d="M22 17H2"/>
+        </svg>
+        Daily Quests
+    </h3>
+    <div id="dailyQuests" class="grid sm:grid-cols-2 xl:grid-cols-3 gap-3 pt-4"></div>
+    <div id="dailySticker" class="absolute top-2 right-2 cursor-pointer select-none text-4xl animate-bounce hover:animate-spin" title="Click me for a surprise!">🎉</div>
+</div>
+
+            <div class="bg-white border rounded-2xl shadow-sm p-6">
+                <h3 class="text-lg font-semibold leading-none tracking-tight pb-2 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-pink-500">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M8 14s2 2 4 2 4-2 4-2"/>
+                        <path d="M10 8h.01"/>
+                        <path d="M14 8h.01"/>
+                    </svg>
+                    Mood Check‑in
+                </h3>
+                <div class="space-y-3 pt-4">
+                    <!-- Camera Mood Detector -->
+                    <div id="cameraMoodDetector" class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-3 border border-blue-200">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                                </svg>
+                                <span class="text-sm font-medium text-blue-700">AI Mood Detector</span>
+                            </div>
+                            <div id="cameraStatus" class="text-xs text-blue-600">Initializing...</div>
+                        </div>
+                        <div id="cameraPreview" class="relative w-full h-24 bg-gray-100 rounded-md overflow-hidden mb-2 hidden">
+                            <video id="cameraVideo" class="w-full h-full object-cover" autoplay muted></video>
+                            <canvas id="cameraCanvas" class="hidden"></canvas>
+                        </div>
+                        <div id="detectedMood" class="text-sm text-center text-blue-700 font-medium hidden">
+                            Detected: <span id="detectedMoodText"></span>
+                        </div>
+                        <button id="detectMoodBtn" class="w-full inline-flex items-center justify-center gap-2 rounded-md text-xs font-medium transition-colors bg-blue-500 text-white hover:bg-blue-600 h-7 px-3 py-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                            </svg>
+                            Detect Mood
+                        </button>
+                    </div>
+
+                    <div id="moodButtons" class="flex items-center gap-2"></div>
+                    <input id="moodNote" type="text" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 disabled:cursor-not-allowed disabled:opacity-50" placeholder="Notes (optional)">
+                    <button id="logMoodBtn" class="w-full inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors bg-blue-500 text-white shadow hover:bg-blue-600 h-9 px-4 py-2">
+                        Log Mood
+                    </button>
+                    <div id="moodChart" class="h-40 mt-4"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
+            <div class="bg-white border rounded-2xl shadow-sm lg:col-span-2 p-6">
+                <h3 class="text-lg font-semibold leading-none tracking-tight pb-2 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-orange-500">
+                        <path d="M10 13a5 5 0 0 0 7.54.54L22 10.5M2 13.5a5 5 0 0 0 7.54-.54L16 3.5M10 19l2-2 2-2M18 13l-2-2-2-2"/>
+                    </svg>
+                    Badges
+                </h3>
+                <div id="badgesContainer" class="flex flex-wrap gap-2 pt-4"></div>
+            </div>
+
+            <div class="bg-white border rounded-2xl shadow-sm p-6">
+                <h3 class="text-lg font-semibold leading-none tracking-tight pb-2 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-teal-500">
+                        <path d="M12 12V21M18 10h-6V4H6V10H0M24 10h-6V4H0V10H24Z"/>
+                        <path d="M22 17H2"/>
+                    </svg>
+                    Friendly Leaderboard
+                </h3>
+                <div class="space-y-3 pt-4">
+                    <input id="displayNameInput" type="text" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 disabled:cursor-not-allowed disabled:opacity-50" placeholder="Your name">
+                    <div id="leaderboard" class="space-y-2"></div>
+                </div>
+            </div>
+        </div>
+
+    <!-- Workout Calendar and Streak -->
+    <!-- Removed from main content as per request -->
+
+        <!-- Workout Calendar Modal -->
+        <div id="workoutCalendarModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black bg-opacity-50 p-4">
+            <div class="max-w-md rounded-2xl bg-white p-6 shadow-lg">
+                <div class="flex items-center justify-between pb-4">
+                    <h3 class="text-lg font-semibold">Workout Calendar</h3>
+                    <button id="closeWorkoutCalendarBtn" class="text-gray-500 hover:text-gray-700 text-xl font-bold">&times;</button>
+                </div>
+                <div id="workoutCalendar" class="grid grid-cols-7 gap-1 text-center text-xs select-none"></div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+            <div class="bg-white border rounded-2xl shadow-sm p-6">
+                <h3 class="text-lg font-semibold leading-none tracking-tight pb-2 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-green-500">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                    Self-Help Resources
+                </h3>
+                <div class="space-y-3 pt-4">
+                    <details class="group">
+                        <summary class="cursor-pointer text-sm font-medium text-slate-700 hover:text-slate-900">Managing Stress: Quick Tips</summary>
+                        <p class="mt-2 text-sm text-slate-600">Try deep breathing, take short walks, or journal your thoughts. Remember, it's okay to take breaks.</p>
+                    </details>
+                    <details class="group">
+                        <summary class="cursor-pointer text-sm font-medium text-slate-700 hover:text-slate-900">Building Healthy Habits</summary>
+                        <p class="mt-2 text-sm text-slate-600">Start small: Drink water regularly, get 7-8 hours of sleep, and connect with friends weekly.</p>
+                    </details>
+                    <details class="group">
+                        <summary class="cursor-pointer text-sm font-medium text-slate-700 hover:text-slate-900">Dealing with Anxiety</summary>
+                        <p class="mt-2 text-sm text-slate-600">Ground yourself with 5-4-3-2-1 technique: 5 things you see, 4 you can touch, etc.</p>
+                    </details>
+                    <details class="group">
+                        <summary class="cursor-pointer text-sm font-medium text-slate-700 hover:text-slate-900">Self-Care Ideas</summary>
+                        <p class="mt-2 text-sm text-slate-600">Listen to favorite music, try a new hobby, or spend time in nature. You deserve care!</p>
+                    </details>
+                </div>
+            </div>
+
+            <div class="fixed bottom-6 right-6 z-50">
+                <button id="openChatBtn" title="Open Chat Support" class="inline-flex items-center justify-center rounded-full bg-blue-500 text-white shadow-lg hover:bg-blue-600 w-14 h-14">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72A7.963 7.963 0 013 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                    </svg>
+                </button>
+            </div>
+
+    </div>
+
+    <!-- Chat Popup Modal -->
+    <div id="chatPopup" class="fixed bottom-20 right-6 bg-black/50 flex items-end justify-end p-4 z-50 hidden" style="width: 400px; height: 600px;">
+        <div class="bg-white rounded-2xl shadow-lg w-full max-w-md flex flex-col h-full">
+            <div class="flex items-center justify-between p-4 border-b">
+                <h3 class="text-lg font-semibold">Anonymous Chat Support</h3>
+                <button id="closeChatBtn" class="text-gray-500 hover:text-gray-700 text-xl font-bold">&times;</button>
+            </div>
+            <div id="chatMessages" class="flex-1 overflow-y-auto bg-slate-50 p-4 space-y-2"></div>
+            <div class="flex gap-2 p-4 border-t">
+                <input id="chatInput" type="text" class="flex-1 h-10 rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500" placeholder="Type your message...">
+                <button id="sendChatBtn" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors bg-blue-500 text-white shadow hover:bg-blue-600 h-10 px-4 py-2">
+                    Send
+                </button>
+            </div>
+            <div class="text-xs text-slate-500 p-2 border-t">This is a simulated AI chat for support. For real help, contact professionals.</div>
+        </div>
+    </div>
+        </div>
+
+        <div class="mt-8 text-xs text-muted-foreground flex items-center gap-2 text-slate-500">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+                <path d="M8 2v4M16 2v4"/>
+                <rect width="18" height="18" x="3" y="4" rx="2"/>
+                <path d="M3 10h18"/>
+            </svg>
+            <span>Prototype for youth self‑care. Not medical advice. For urgent help, contact local services.</span>
+        </div>
+    </div>
+
+    <div id="miniGameModal" class="fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50 hidden">
+        <div class="w-full max-w-md bg-white border rounded-2xl shadow-sm">
+            <div class="p-6 pb-2 flex flex-row items-center justify-between">
+                <h3 class="text-lg font-semibold leading-none tracking-tight">Bubble‑Breath</h3>
+                <button id="closeMiniGameBtn" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors hover:bg-slate-100 hover:text-slate-800 h-9 px-4 py-2">
+                    Close
+                </button>
+            </div>
+            <div class="p-6 pt-0">
+                <div class="flex flex-col items-center gap-6">
+                    <div id="bubble" class="w-40 h-40 rounded-full bg-blue-500/70"></div>
+                    <div class="text-center">
+                        <div id="phaseText" class="text-2xl font-semibold capitalize">inhale</div>
+                        <div id="countText" class="text-sm text-muted-foreground text-slate-500">Count: 4</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Task Timer Display -->
+    <div id="taskTimerContainer" class="fixed inset-0 bg-black bg-opacity-90 flex flex-col items-center justify-center z-50 hidden">
+        <div class="text-center text-white max-w-lg p-6 rounded-lg">
+            <div class="text-6xl mb-6">💪</div>
+            <h2 class="text-5xl font-bold mb-4">You've Got This!</h2>
+            <p class="text-2xl mb-8">Stay focused and complete your wellness task</p>
+            <div id="overlayTimerDisplay" class="text-4xl font-mono mb-8">00:00</div>
+            <button id="cancelTaskBtn" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-lg font-semibold transition-colors bg-red-600 text-white hover:bg-red-700 px-6 py-3">
+                Don't Give Up! Cancel Task
+            </button>
+        </div>
+    </div>
+
+    <!-- Proof Submission Modal -->
+    <div id="proofModal" class="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 hidden">
+        <div class="bg-white rounded-2xl shadow-lg w-full max-w-md">
+            <div class="p-4 border-b">
+                <h3 class="text-lg font-semibold">Submit Proof for Task</h3>
+            </div>
+            <div class="p-4">
+                <textarea id="proofText" class="w-full h-24 rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500" placeholder="Describe what you did to complete the task..."></textarea>
+                <div class="flex gap-2 mt-4">
+                    <button id="submitProofBtn" class="flex-1 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors bg-blue-500 text-white hover:bg-blue-600 h-9 px-4 py-2">
+                        Submit Proof
+                    </button>
+                    <button id="cancelProofBtn" class="flex-1 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors border border-slate-200 bg-white shadow-sm hover:bg-slate-100 h-9 px-4 py-2">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="fixed bottom-4 left-1/2 -translate-x-1/2 bg-white text-slate-900 px-4 py-2 rounded-lg shadow-xl z-50 transition-all duration-300 transform scale-95 opacity-0">
+        <span id="toastMessage"></span>
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
